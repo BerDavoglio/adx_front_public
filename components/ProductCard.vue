@@ -28,7 +28,7 @@ function addCartFunc(objectSelected) {
   snackbar.add({
     type: 'success',
     text: 'Item adicionado com Sucesso!'
-})
+  })
 };
 
 </script>
