@@ -7,33 +7,22 @@
         </div>
         <div class="w-10 m-auto">ADX</div>
       </div>
-      <div class='grid m-auto cursor-pointer grid-cols-4'>
+      <div class='grid m-auto cursor-pointer grid-cols-2'>
         <NuxtLink to="/">
           <div class="
-          w-24 px-[25%]
+          w-32 px-[20%]
           border-r-2 font-bold
           hover:bg-gray-300
           active:bg-gray-400
           active:text-white
           py-4
           border-l-2">
-            Home
-          </div>
-        </NuxtLink>
-        <NuxtLink to="/products">
-          <div class="
-          w-24 px-[15%]
-          border-r-2 font-bold
-          hover:bg-gray-300
-          active:bg-gray-400
-          active:text-white
-          py-4">
             Produtos
           </div>
         </NuxtLink>
         <NuxtLink to="/cart">
           <div class="
-          w-24 px-[18%]
+          w-32 px-[25%]
           border-r-2 font-bold
           hover:bg-gray-300
           active:bg-gray-400
