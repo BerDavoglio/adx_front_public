@@ -1,13 +1,9 @@
 <template>
   <div>
-
+    {{ id }}
   </div>
 </template>
 
-<script>
-  export default {}
+<script setup>
+const { id } = useRoute().params
 </script>
-
-<style scoped>
-
-</style>

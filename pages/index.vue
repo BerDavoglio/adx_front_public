@@ -1,12 +1,8 @@
 <template>
   <div>
-    <div class="text-3xl font-bold underline">Hello World</div> 
+    <div class="text-2xl font-bold mx-auto w-fit">Mini E-Commerce</div> 
   </div>
 </template>
 
-<script>
+<script setup>
 </script>
-
-<style scoped>
-
-</style>
