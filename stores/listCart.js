@@ -10,31 +10,31 @@ export const useListCartStore = defineStore("listCart", {
     total: (state) => {
       let totalValue = 0;
       state.listCart.map((i) => {
-        totalValue += (i.price * i.quantity);
+        totalValue += (i.price * i.stock);
       });
       return totalValue;
     },
   },
   actions: {
     addItem(objectSelected) {
-      let obj = this.listCart.findIndex((x) => x.id === objectSelected.id);
+      let obj = this.listCart.findIndex((x) => x._id === objectSelected._id);
       if (obj === -1) {
         this.listCart.push({
-          id: objectSelected.id,
+          _id: objectSelected._id,
           name: objectSelected.name,
           description: objectSelected.description,
           price: objectSelected.price,
           img: objectSelected.img,
-          quantity: 1,
+          stock: 1,
         });
       } else {
-        this.listCart[obj]["quantity"] = this.listCart[obj]["quantity"] + 1;
+        this.listCart[obj]["stock"] = this.listCart[obj]["stock"] + 1;
       }
     },
     removeItem(objectSelected) {
-      let obj = this.listCart.findIndex((x) => x.id === objectSelected.id);
-      this.listCart[obj]["quantity"] = this.listCart[obj]["quantity"] - 1;
-      if (this.listCart[obj]["quantity"] == 0) {
+      let obj = this.listCart.findIndex((x) => x._id === objectSelected._id);
+      this.listCart[obj]["stock"] = this.listCart[obj]["stock"] - 1;
+      if (this.listCart[obj]["stock"] == 0) {
         this.listCart.splice(obj, 1);
       }
     },

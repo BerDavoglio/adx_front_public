@@ -1,12 +1,11 @@
 <template>
   <div>
-    <div
-      class="border-gray-400 border-2 rounded-md w-[95%] h-[10rem] mx-auto mt-6">
+    <div class="border-gray-400 border-2 rounded-md w-[95%] h-[10rem] mx-auto mt-6">
       <div class="m-4 grid grid-cols-5">
         <img :src="obj.img" class="rounded-md max-h-[8rem]">
         <div class="w-fit m-auto font-semibold text-xl my-auto">{{ obj.name }}</div>
         <div class="w-fit m-auto font-semibold text-xl my-auto">R${{ obj.price.toFixed(2) }}</div>
-        <div class="w-fit m-auto font-semibold text-xl my-auto">Quantidade: {{ obj.quantity }}</div>
+        <div class="w-fit m-auto font-semibold text-xl my-auto">Quantidade: {{ obj.stock }}</div>
         <div class="w-fit m-auto my-auto">
           <div @click="addCartFunc(obj)" class="cursor-pointer rounded-sm w-24 h-10 bg-green-500 m-4">
             <div class="w-fit pt-2 m-auto">Adicionar</div>
@@ -28,22 +27,28 @@ const listCart = useListCartStore();
 
 const snackbar = useSnackbar();
 
-function addCartFunc(objectSelected) {
+async function addCartFunc(objectSelected) {
   listCart.addItem(objectSelected);
-  listProduct.removeOne(objectSelected.id);
+  await listProduct.removeOne(objectSelected._id, objectSelected.stock)
+    .then(async () => {
+      await useListProductStore().loadData();
+    });;
   snackbar.add({
     type: 'success',
     text: 'Item adicionado com Sucesso!'
   })
 };
 
-function removeCartFunc(objectSelected) {
+async function removeCartFunc(objectSelected) {
   listCart.removeItem(objectSelected);
-  listProduct.addOne(objectSelected.id);
+  await listProduct.addOne(objectSelected._id, objectSelected.stock)
+    .then(async () => {
+      await useListProductStore().loadData();
+    });;
   snackbar.add({
     type: 'error',
     text: 'Item removido com Sucesso!'
-})
+  })
 };
 
 </script>

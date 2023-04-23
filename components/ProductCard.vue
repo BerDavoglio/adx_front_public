@@ -1,14 +1,14 @@
 <template>
   <div>
     <div @click="addCartFunc(obj)"
-      class="border-gray-400 hover:bg-green-500 cursor-pointer border-2 rounded-md w-[24rem] h-[28rem] mx-auto mt-6">
+      :class="['border-gray-400 cursor-pointer border-2 rounded-md w-[24rem] mx-auto mt-6 ' + (obj.stock === 0 ? 'bg-red-500' : 'hover:bg-green-500')]">
       <div class="m-4">
         <img :src="obj.img" class="rounded-md">
         <div class="w-fit m-auto font-semibold text-xl my-2">{{ obj.name }}</div>
-        <div class="h-[6rem] m-auto text-justify overflow-y-scroll">
-          {{ obj.description }}
-        </div>
         <div class="mt-2 mx-auto w-fit">R${{ obj.price.toFixed(2) }} | Estoque: {{ obj.stock }}</div>
+        <div class="mt-2 mx-auto w-fit">Tamanhos: <strong>{{ obj.size }}</strong></div>
+        <div class="mt-2 mx-auto w-fit">Cores: <strong>{{ obj.color }}</strong></div>
+        <div class="mt-2 mx-auto w-fit">Materiais: <strong>{{ obj.material }}</strong></div>
       </div>
     </div>
   </div>
@@ -22,13 +22,23 @@ const listCart = useListCartStore();
 
 const snackbar = useSnackbar();
 
-function addCartFunc(objectSelected) {
-  listCart.addItem(objectSelected);
-  listProduct.removeOne(objectSelected.id);
-  snackbar.add({
-    type: 'success',
-    text: 'Item adicionado com Sucesso!'
-  })
+async function addCartFunc(objectSelected) {
+  if (objectSelected.stock > 0) {
+    listCart.addItem(objectSelected);
+    await listProduct.removeOne(objectSelected._id)
+      .then(async () => { 
+        await useListProductStore().loadData();
+      });
+    snackbar.add({
+      type: 'success',
+      text: 'Item adicionado com Sucesso!'
+    })
+  } else {
+    snackbar.add({
+      type: 'error',
+      text: 'Produto fora de estoque!'
+    })
+  }
 };
 
 </script>
