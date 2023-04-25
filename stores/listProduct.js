@@ -8,12 +8,12 @@ export const useListProductStore = defineStore("listProduct", {
   },
   actions: {
     async loadData() {
-      const { data } = await useFetch("http://127.0.0.1:3000/products/");
+      const { data } = await useFetch("https://adx-backend-berdavoglio.onrender.com/products/");
       this.listProduct = data.value;
     },
     async addOne(id) {
       let obj = this.listProduct.findIndex((x) => x._id === id);
-      await useFetch("http://127.0.0.1:3000/products/" + id, {
+      await useFetch("https://adx-backend-berdavoglio.onrender.com/products/" + id, {
         method: "PATCH",
         body: {
           stock: this.listProduct[obj].stock + 1,
@@ -22,7 +22,7 @@ export const useListProductStore = defineStore("listProduct", {
     },
     async removeOne(id) {
       let obj = this.listProduct.findIndex((x) => x._id === id);
-      await useFetch("http://127.0.0.1:3000/products/" + id, {
+      await useFetch("https://adx-backend-berdavoglio.onrender.com/products/" + id, {
         method: "PATCH",
         body: {
           stock: this.listProduct[obj].stock - 1,
